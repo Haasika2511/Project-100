@@ -1,5 +1,5 @@
 var SpeechRecognition = window.webkitSpeechRecognition;
-var Content;
+
 var recognition = new SpeechRecognition();
 
 
@@ -8,15 +8,27 @@ function start()
     recognition.start();
 } 
 
+recognition.onresult = function (event) {
+    console.log(event);
+    var Content = event.results[0][0].transcript;
+    console.log(Content);
+    
 
-camera = document.getElementById("camera");
+    if (Content == "selfie") {
+        console.log("taking selfie in 1 second");
+        speak();
+    }
+
+}
+
+
 Webcam.set({
     width:500,
     height:400,
     image_format : 'jpeg',
     jpeg_quality:90
 });
-
+camera = document.getElementById("camera");
 
 
 function speak(){
@@ -69,4 +81,11 @@ Webcam.snap(function(data_uri){
     }
 });
 
+}
+
+function save(){
+    link1=document.getElementById("link1");
+    image1=document.getElementById("selfie1").src;
+    link1.href=image1;
+    link1.click();
 }
